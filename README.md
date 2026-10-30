@@ -118,3 +118,10 @@ service-account private key.
 - Login role di UI masih pratinjau, bukan autentikasi produksi. Aktifkan Firebase
   Authentication dan terapkan Firestore Security Rules sebelum memakai data asli.
 - Jangan menganggap endpoint health sebagai bukti bahwa database sudah aktif.
+
+### Catatan perbaikan konfigurasi Vercel
+
+`vercel.json` tidak menetapkan `functions.runtime` secara manual. Vercel
+otomatis mendeteksi runtime Node.js untuk file JavaScript di folder `api/`.
+Ini menghindari error `invalid_function_runtime` akibat nilai runtime yang
+tidak sesuai dengan format runtime Vercel.
