@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XI TKJ - Aplikasi Kelas</title>
+<style>
+:root{--bg:#eef1f7;--card:#f4f6fb;--text:#1d2433;--muted:#4f5870;--accent:#3f5be0;--shadow:8px 8px 16px #d1d6e2,-8px -8px 16px #ffffff;--inset:inset 3px 3px 6px #d1d6e2,inset -3px -3px 6px #ffffff;--border:#dde2ec;--H:#15803d;--I:#1d4ed8;--S:#b45309;--A:#b91c1c}
+[data-theme=dark]{--bg:#1b1f2a;--card:#242a38;--text:#f1f4fb;--muted:#b4bdd0;--accent:#7b93ff;--shadow:6px 6px 14px #131720,-6px -6px 14px #2a3143;--inset:inset 3px 3px 6px #151923,inset -3px -3px 6px #2c3447;--border:#343c52;--H:#4ade80;--I:#93c5fd;--S:#fcd34d;--A:#fca5a5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.55;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px 8px;position:sticky;top:0;z-index:20;background:var(--bg)}
+.brand h1{font-size:1.25rem;font-weight:700}
+.brand p{font-size:.9rem;color:var(--muted)}
+.hdr-btns{display:flex;gap:8px}
+.btn{min-height:44px;min-width:44px;padding:10px 16px;border-radius:14px;background:var(--bg);box-shadow:var(--shadow);font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:none}
+.btn.danger{color:var(--A)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+nav{display:flex;gap:10px;overflow-x:auto;padding:6px 16px 16px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;min-height:44px;padding:10px 16px;border-radius:14px;background:var(--bg);box-shadow:var(--shadow);font-weight:600;color:var(--muted)}
+nav button.active{color:#fff;background:var(--accent);box-shadow:none}
+main{padding:4px 16px 48px;max-width:1100px;margin:0 auto}
+.card{background:var(--card);border-radius:22px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px;border:1px solid var(--border)}
+.card h2{font-size:1.2rem;margin-bottom:6px}
+.card h3{font-size:1.05rem;margin-bottom:10px}
+.muted{color:var(--muted);font-size:.95rem}
+.grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:800px){.grid{grid-template-columns:1fr 1fr}}
+.alert{background:var(--card);border-left:6px solid var(--S);border-radius:16px;padding:14px 16px;margin-bottom:16px;box-shadow:var(--shadow);font-weight:600}
+ol,ul{padding-left:22px}
+li{padding:4px 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{min-height:44px;padding:10px 16px;border-radius:14px;background:var(--bg);box-shadow:var(--inset);font-weight:600;color:var(--muted)}
+.chip.on{background:var(--accent);color:#fff;box-shadow:none}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.row:last-child{border-bottom:0}
+.name{font-weight:600;min-width:200px;flex:1}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{min-height:44px;min-width:52px;padding:8px 10px;border-radius:12px;background:var(--bg);box-shadow:var(--inset);font-weight:700;color:var(--muted)}
+.seg button.on.H{background:var(--H);color:#fff}
+.seg button.on.I{background:var(--I);color:#fff}
+.seg button.on.S{background:var(--S);color:#fff}
+.seg button.on.A{background:var(--A);color:#fff}
+.seg button:disabled{cursor:default;opacity:.85}
+.badge{display:inline-block;padding:4px 10px;border-radius:99px;font-size:.8rem;font-weight:700}
+.b-aman{background:#dbeafe;color:#1e3a8a}
+.b-segera{background:#fef3c7;color:#78350f}
+.b-lewat{background:#e5e7eb;color:#374151}
+[data-theme=dark] .b-aman{background:#1e3a8a;color:#dbeafe}
+[data-theme=dark] .b-segera{background:#78350f;color:#fef3c7}
+[data-theme=dark] .b-lewat{background:#374151;color:#e5e7eb}
+.bar{height:12px;border-radius:99px;background:var(--bg);box-shadow:var(--inset);overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s}
+input,select{width:100%;min-height:44px;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:var(--bg);box-shadow:var(--inset)}
+.form{display:grid;gap:10px;grid-template-columns:1fr;margin-bottom:12px}
+@media(min-width:700px){.form{grid-template-columns:1fr 1fr 1fr auto}}
+.num{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--bg);box-shadow:var(--inset);font-size:.85rem;font-weight:700;margin-right:8px;flex:0 0 30px}
+.person{display:flex;align-items:center;padding:8px 0}
+.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(10,12,20,.45);z-index:50}
+.overlay.show{display:flex}
+.modal{background:var(--card);border-radius:22px;padding:22px;width:min(92vw,380px);box-shadow:var(--shadow);display:grid;gap:12px}
+.loading{display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--card);padding:24px 28px;border-radius:22px;box-shadow:var(--shadow);font-weight:600}
+.spin{width:40px;height:40px;border:4px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:s 0.9s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.err{color:var(--A);font-size:.9rem;min-height:1.2em}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120%);background:var(--accent);color:#fff;padding:12px 20px;border-radius:14px;box-shadow:var(--shadow);font-weight:600;transition:transform .3s;z-index:60;max-width:90vw}
+#toast.show{transform:translate(-50%,0)}
+.sumrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.sumrow span{padding:6px 12px;border-radius:12px;background:var(--bg);box-shadow:var(--inset);font-size:.9rem;font-weight:600}
+input[type=date]{min-width:0}
+:focus{outline:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>XI TKJ</h1>
+    <p>Aplikasi Kelas</p>
+  </div>
+  <div class="hdr-btns">
+    <button class="btn" id="themeBtn" onclick="toggleTheme()" aria-label="Ganti tema">🌙 Tema</button>
+    <button class="btn" id="adminBtn" onclick="toggleAdmin()">Mode Admin</button>
+  </div>
+</header>
+<nav id="nav" aria-label="Menu utama"></nav>
+<main id="main"></main>
+
+<div class="overlay" id="loader"><div class="loading"><div class="spin"></div><span>Loading…</span></div></div>
+<div class="overlay" id="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt">
+    <h2 id="mt" style="font-size:1.2rem">Login Admin</h2>
+    <label class="muted" for="lu">Username</label>
+    <input id="lu" autocomplete="username">
+    <label class="muted" for="lp">Password</label>
+    <input id="lp" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+    <div class="err" id="lerr"></div>
+    <div class="hdr-btns" style="justify-content:flex-end">
+      <button class="btn" onclick="closeModal()">Batal</button>
+      <button class="btn primary" onclick="login()">Masuk</button>
+    </div>
+  </div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const STUDENTS=["Adis Aqila Nurfawaz","Ahmad Faaih Aqila","Andika Persada","Angga Irawan","Arga Pratama Muhandar","Deril Ibrahim","Fahrizal","Iksan Nugraha Pratama","Kiki Ardiansah","M Istikhoni Abdurahman","Maulana Husni Solehudin","Muhamad Azmi Arvan Apriliano","Muhamad Fadilah","Muhamad Fradil Maulana Iqrom","Muhamad Lucky Purnama","Muhamad Nazril Abdurahman","Muhamad Rizki Fadilah","Muhamad Toyibur Rizki","Muhammad Anwar Syadad","Muhammad Azizah Rizki","Muhammad Fajar","Muhammad Satria Leviano","Muhammad Teguh Suhardiuanto","Nazam Satura Fikrah","Rangga Mulia Galih","Risma Wati Dewi","Rivan Ibrahim","Rafi Muwahid","Rahmat Tri Anggoro","Yopti Nugraha"];
+const DAYS=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const WEEK=['Senin','Selasa','Rabu','Kamis','Jumat'];
+const JADWAL={Senin:['AIJ','Informatika','PJOK'],Selasa:['ASJ','BI','PAIBP'],Rabu:['PPS','TWAN','BING'],Kamis:['SI','BK','BJPG','MTK'],Jumat:['KIK','BTQ']};
+const PIKET={Senin:['Teguh','Rivan','Rangga','Anwar','Fradil','Nazam'],Selasa:['Rafi','Satria','Iksan','Rahmat','Hori','Nazril'],Rabu:['Fahrizal','Kiki','Husni','Azmi','Ajihad','Deril'],Kamis:['Faarih','Fajar','Fadil','Toyibur','Lucky','Risma','Dika'],Jumat:['Adis','Yopti','Angga','Arga','Rizki.F']};
+const ORG=[['Wali Kelas','Muh. Riza Palupy, S.H'],['Ketua Kelas','Rafi Muwahid'],['Wakil Ketua Kelas','Muhammad Azmi Arvan Apriliano'],['Sekretaris','Muhammad Toyibur Rizki & Risma Wati Dewi'],['Bendahara','Rivan Ibrahim'],['Seksi Keamanan','Arga Pratama Muhandar'],['Seksi Kebersihan','Kiki Ardiansah']];
+const TABS=[['home','Beranda'],['absen','Absensi'],['rekap','Rekap'],['tugas','Tugas'],['jadwal','Jadwal'],['piket','Piket'],['kelas','Kelas']];
+const ST={H:'Hadir',I:'Izin',S:'Sakit',A:'Alpa'};
+const DL_WARN=48*3600e3;
+
+const $=id=>document.getElementById(id);
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate=d=>d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const fmtDL=s=>new Date(s).toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'});
+const dayOf=ds=>DAYS[new Date(ds+'T00:00').getDay()];
+
+let state={
+  tab:'home',
+  admin:localStorage.getItem('xitkj_admin')==='1',
+  date:today(),
+  absen:load('xitkj_absen',{}),
+  tugas:load('xitkj_tugas',[]),
+  jadwalDay:WEEK.includes(dayOf(today()))?dayOf(today()):'Senin',
+  piketDay:WEEK.includes(dayOf(today()))?dayOf(today()):'Senin',
+  period:'ganjil'
+};
+
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),1800)}
+function withLoader(fn,ms=400){const l=$('loader');l.classList.add('show');setTimeout(()=>{fn();l.classList.remove('show')},ms)}
+function urgency(t){const diff=new Date(t.deadline)-Date.now();return diff<0?'lewat':diff<=DL_WARN?'segera':'aman'}
+const URG={aman:['b-aman','Aman'],segera:['b-segera','Segera'],lewat:['b-lewat','Lewat']};
+
+function go(t){state.tab=t;withLoader(render,350)}
+function render(){
+  $('nav').innerHTML=TABS.map(([k,l])=>`<button class="${state.tab===k?'active':''}" onclick="go('${k}')" aria-current="${state.tab===k}">${l}</button>`).join('');
+  $('adminBtn').textContent=state.admin?'Keluar Admin':'Mode Admin';
+  $('adminBtn').className='btn'+(state.admin?' primary':'');
+  $('main').innerHTML=({home,absen,rekap,tugas,jadwal,piket,kelas})[state.tab]();
+}
+
+function home(){
+  const now=new Date(),wd=dayOf(today());
+  const jad=JADWAL[wd], pk=PIKET[wd];
+  const urgent=state.tugas.filter(t=>urgency(t)==='segera');
+  const rec=state.absen[today()]||{};
+  const cnt={H:0,I:0,S:0,A:0};Object.values(rec).forEach(c=>{if(cnt[c]!==undefined)cnt[c]++});
+  const belum=STUDENTS.length-Object.keys(rec).length;
+  return `
+  <div class="card"><p class="muted">${fmtDate(now)}</p><h2>Welcome To TKJ PRIDE </h2><p class="muted">Pilih menu di atas untuk melihat jadwal, absensi, dan tugas. Klik "Mode Admin" di kanan atas untuk mengelola data.</p></div>
+  ${urgent.length?`<div class="alert">⏰ ${urgent.length} tugas mendekati deadline: ${urgent.map(t=>esc(t.judul)).join(', ')}</div>`:''}
+  <div class="grid">
+    <div class="card"><h3>Jadwal hari ini</h3>${jad?`<ol>${jad.map(m=>`<li>${m}</li>`).join('')}</ol>`:'<p class="muted">Hari libur </p>'}</div>
+    <div class="card"><h3>Piket hari ini</h3>${pk?`<ol>${pk.map(n=>`<li>${n}</li>`).join('')}</ol>`:'<p class="muted">Tidak ada jadwal piket</p>'}</div>
+    <div class="card"><h3>Kehadiran hari ini</h3>
+      ${Object.keys(rec).length?`<div class="sumrow"><span>Hadir ${cnt.H}</span><span>Izin ${cnt.I}</span><span>Sakit ${cnt.S}</span><span>Alpa ${cnt.A}</span></div><p class="muted" style="margin-top:8px">Belum dicatat: ${belum} siswa</p>`:'<p class="muted">Belum ada absensi hari ini.</p>'}
+    </div>
+    <div class="card"><h3>Tugas mendekati deadline</h3>
+      ${urgent.length?`<ul>${urgent.map(t=>`<li>${esc(t.judul)} <span class="muted">(${fmtDL(t.deadline)})</span></li>`).join('')}</ul>`:'<p class="muted">Tidak ada tugas mendesak.</p>'}
+      <button class="btn" style="margin-top:12px" onclick="reqNotif()">🔔 Aktifkan notifikasi</button>
+    </div>
+  </div>`;
+}
+
+function absen(){
+  const rec=state.absen[state.date]||{};
+  const list=STUDENTS.map((n,i)=>{
+    const cur=rec[n]||'';
+    const btns=Object.keys(ST).map(c=>`<button class="${cur===c?'on '+c:''}" ${state.admin?`onclick="setStatus(${i},'${c}')"`:'disabled'} aria-pressed="${cur===c}" aria-label="${ST[c]}">${c}</button>`).join('');
+    return `<div class="row"><div class="person"><span class="num">${i+1}</span><span class="name">${esc(n)}</span></div><div class="seg">${btns}</div></div>`;
+  }).join('');
+  const isDay=WEEK.includes(dayOf(state.date));
+  return `
+  <div class="card">
+    <div class="form" style="grid-template-columns:1fr">
+      <label class="muted" for="tgl">Tanggal absensi</label>
+      <input type="date" id="tgl" value="${state.date}" onchange="state.date=this.value;render()">
+    </div>
+    <p class="muted">${fmtDate(new Date(state.date+'T00:00'))}${isDay?'':' — hari libur, tetap bisa dicatat'}</p>
+    <p class="muted">Keterangan: <b>H</b> Hadir · <b>I</b> Izin · <b>S</b> Sakit · <b>A</b> Alpa</p>
+    ${state.admin?`<div class="hdr-btns" style="margin-top:12px;flex-wrap:wrap"><button class="btn" onclick="markAll('H')">Tandai semua Hadir</button><button class="btn danger" onclick="clearDay()">Hapus absensi hari ini</button></div>`:`<p class="muted" style="margin-top:10px">🔒 Login mode admin untuk mengubah absensi.</p>`}
+  </div>
+  <div class="card">${list}</div>`;
+}
+function setStatus(i,c){
+  const d=state.date;state.absen[d]=state.absen[d]||{};
+  const n=STUDENTS[i];
+  if(state.absen[d][n]===c)delete state.absen[d][n];else state.absen[d][n]=c;
+  save('xitkj_absen',state.absen);render();toast('Tersimpan');
+}
+function markAll(c){
+  if(!state.admin)return;
+  const d=state.date;state.absen[d]={};STUDENTS.forEach(n=>state.absen[d][n]=c);
+  save('xitkj_absen',state.absen);withLoader(()=>{render();toast('Semua ditandai Hadir')},300);
+}
+function clearDay(){
+  if(!state.admin||!confirm('Hapus absensi tanggal ini?'))return;
+  delete state.absen[state.date];save('xitkj_absen',state.absen);render();toast('Absensi dihapus');
+}
+
+function inPeriod(ds){
+  const y=new Date().getFullYear();
+  if(!ds.startsWith(String(y)))return false;
+  const m=Number(ds.slice(5,7));
+  if(state.period==='ganjil')return m>=7;
+  if(state.period==='genap')return m<=6;
+  return true;
+}
+function rekap(){
+  const dates=Object.keys(state.absen).filter(inPeriod);
+  const total=dates.length;
+  const rows=STUDENTS.map((n,i)=>{
+    const c={H:0,I:0,S:0,A:0};
+    dates.forEach(d=>{const s=state.absen[d][n];if(s&&c[s]!==undefined)c[s]++});
+    const pct=total?Math.round(c.H/total*100):0;
+    return `<div class="row" style="display:block"><div style="display:flex;justify-content:space-between;gap:8px"><span class="name" style="min-width:0"><span class="num">${i+1}</span>${esc(n)}</span><b>${pct}%</b></div><div class="bar"><i style="width:${pct}%"></i></div><div class="muted" style="font-size:.85rem">H ${c.H} · I ${c.I} · S ${c.S} · A ${c.A}</div></div>`;
+  }).join('');
+  const avg=total?Math.round(rows.length?STUDENTS.reduce((a,n)=>{let h=0;dates.forEach(d=>{if(state.absen[d][n]==='H')h++});return a+(h/total*100)},0)/STUDENTS.length:0):0;
+  const opts=[['ganjil','Semester Ganjil (Jul–Des)'],['genap','Semester Genap (Jan–Jun)'],['tahun','Seluruh tahun']];
+  return `
+  <div class="card">
+    <h3>Rekap kehadiran</h3>
+    <div class="chips">${opts.map(([k,l])=>`<button class="chip ${state.period===k?'on':''}" onclick="setPeriod('${k}')">${l}</button>`).join('')}</div>
+    <div class="sumrow"><span>Hari tercatat: ${total}</span><span>Rata-rata kelas: ${avg}%</span></div>
+    <p class="muted" style="margin-top:8px">Persentase dihitung dari jumlah hari yang sudah tercatat. Cocok untuk laporan wali kelas.</p>
+  </div>
+  <div class="card">${total?rows:'<p class="muted">Belum ada data absensi pada periode ini.</p>'}</div>`;
+}
+function setPeriod(p){state.period=p;withLoader(render,300)}
+
+function tugas(){
+  const sorted=[...state.tugas].sort((a,b)=>new Date(a.deadline)-new Date(b.deadline));
+  const list=sorted.map(t=>{
+    const u=urgency(t);
+    return `<div class="row"><div style="flex:1;min-width:200px"><b>${esc(t.judul)}</b><div class="muted">${esc(t.mapel||'-')} · Deadline ${fmtDL(t.deadline)}</div></div><div style="display:flex;gap:8px;align-items:center"><span class="badge ${URG[u][0]}">${URG[u][1]}</span>${state.admin?`<button class="btn danger" onclick="delTugas('${t.id}')" aria-label="Hapus tugas">Hapus</button>`:''}</div></div>`;
+  }).join('');
+  return `
+  <div class="card">
+    <h3>Notifikasi tugas</h3>
+    <p class="muted">Tugas dengan deadline kurang dari 2 hari ditandai <b>Segera</b> dan muncul sebagai pengingat.</p>
+    <button class="btn" style="margin-top:10px" onclick="reqNotif()">🔔 Aktifkan notifikasi</button>
+  </div>
+  ${state.admin?`<div class="card"><h3>Tambah tugas</h3><div class="form">
+    <input id="tj" placeholder="Judul tugas">
+    <input id="tm" placeholder="Mata pelajaran">
+    <input id="td" type="datetime-local" aria-label="Deadline">
+    <button class="btn primary" onclick="addTugas()">Tambah</button>
+  </div></div>`:''}
+  <div class="card">${sorted.length?list:'<p class="muted">Belum ada tugas.</p>'}</div>`;
+}
+function addTugas(){
+  const j=$('tj').value.trim(),m=$('tm').value.trim(),d=$('td').value;
+  if(!j||!d){toast('Judul dan deadline wajib diisi');return}
+  state.tugas.push({id:Date.now().toString(36),judul:j,mapel:m,deadline:d});
+  save('xitkj_tugas',state.tugas);
+  withLoader(()=>{render();toast('Tugas ditambahkan')},300);
+}
+function delTugas(id){
+  if(!state.admin||!confirm('Hapus tugas ini?'))return;
+  state.tugas=state.tugas.filter(t=>t.id!==id);save('xitkj_tugas',state.tugas);render();toast('Tugas dihapus');
+}
+function reqNotif(){
+  if(!('Notification' in window)){toast('Browser tidak mendukung notifikasi');return}
+  Notification.requestPermission().then(p=>{toast(p==='granted'?'Notifikasi aktif':'Notifikasi ditolak');checkDue()});
+}
+function checkDue(){
+  const due=state.tugas.filter(t=>urgency(t)==='segera');
+  if(!due.length)return;
+  if(!('Notification' in window)||Notification.permission!=='granted')return;
+  if(sessionStorage.getItem('xitkj_notif'))return;
+  sessionStorage.setItem('xitkj_notif','1');
+  new Notification('Tugas mendekati deadline',{body:due.map(t=>t.judul).join(', ')});
+}
+
+function jadwal(){
+  const day=state.jadwalDay;
+  return `
+  <div class="chips">${WEEK.map(d=>`<button class="chip ${day===d?'on':''}" onclick="setDay('jadwalDay','${d}')">${d}</button>`).join('')}</div>
+  <div class="card"><h3>Jadwal pelajaran ${day}</h3>
+    <ol>${JADWAL[day].map((m,i)=>`<li class="row" style="border:0;padding:10px 0"><span class="num">${i+1}</span><b>${m}</b></li>`).join('')}</ol>
+  </div>`;
+}
+function piket(){
+  const day=state.piketDay;
+  return `
+  <div class="chips">${WEEK.map(d=>`<button class="chip ${day===d?'on':''}" onclick="setDay('piketDay','${d}')">${d}</button>`).join('')}</div>
+  <div class="card"><h3>Jadwal piket ${day}</h3>
+    ${PIKET[day].map((n,i)=>`<div class="person"><span class="num">${i+1}</span><span class="name" style="min-width:0">${n}</span></div>`).join('')}
+  </div>`;
+}
+function setDay(k,v){state[k]=v;withLoader(render,250)}
+
+function kelas(){
+  return `
+  <div class="grid">
+    <div class="card"><h3>Organisasi kelas</h3>
+      ${ORG.map(([j,n])=>`<div class="row"><span class="muted">${j}</span><b style="text-align:right">${esc(n)}</b></div>`).join('')}
+    </div>
+    <div class="card"><h3>Daftar siswa (${STUDENTS.length})</h3>
+      ${STUDENTS.map((n,i)=>`<div class="person"><span class="num">${i+1}</span><span>${esc(n)}</span></div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function toggleTheme(){
+  const next=document.documentElement.dataset.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=next;
+  localStorage.setItem('xitkj_theme',next);
+  $('themeBtn').textContent=next==='dark'?'☀️ Tema':'🌙 Tema';
+}
+function toggleAdmin(){state.admin?logout():openLogin()}
+function openLogin(){$('modal').classList.add('show');$('lu').value='';$('lp').value='';$('lerr').textContent='';setTimeout(()=>$('lu').focus(),50)}
+function closeModal(){$('modal').classList.remove('show')}
+function login(){
+  const u=$('lu').value.trim(),p=$('lp').value;
+  if(u==='nazril'&&p==='admin1.'){
+    state.admin=true;localStorage.setItem('xitkj_admin','1');closeModal();
+    withLoader(()=>{render();toast('Mode admin aktif')},400);
+  }else $('lerr').textContent='Username atau password salah';
+}
+function logout(){state.admin=false;localStorage.removeItem('xitkj_admin');render();toast('Keluar dari mode admin')}
+
+// init
+(function(){
+  const th=localStorage.getItem('xitkj_theme');
+  if(th){document.documentElement.dataset.theme=th;$('themeBtn').textContent=th==='dark'?'☀️ Tema':'🌙 Tema'}
+  $('loader').classList.add('show');
+  setTimeout(()=>{render();$('loader').classList.remove('show');checkDue()},600);
+})();
+</script>
+</body>
+</html>
