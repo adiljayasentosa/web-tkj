@@ -7,10 +7,10 @@
  * Keamanan data tetap wajib diatur dengan Firebase Authentication dan Firestore Rules.
  */
 export const firebaseConfig = {
-  apiKey: "AIzaSyAiOEdp1GvWJmWnARbAY5O-1XUTVlKzLLw",
-  authDomain: "web-tkj-3590b.firebaseapp.com",
-  projectId: "web-tkj-3590b",
-  storageBucket: "web-tkj-3590b.firebasestorage.app",
-  messagingSenderId: "51483628250",
-  appId: "1:51483628250:web:adab7c4bd88a10bdf0cbe3"
+  apiKey: "ISI_API_KEY_FIREBASE_DI_SINI",
+  authDomain: "ISI_PROJECT_ID.firebaseapp.com",
+  projectId: "ISI_PROJECT_ID",
+  storageBucket: "ISI_STORAGE_BUCKET",
+  messagingSenderId: "ISI_MESSAGING_SENDER_ID",
+  appId: "ISI_APP_ID"
 };

@@ -81,3 +81,40 @@ npm run check
 `js/services/firebase-config.example.js` adalah template. File `js/services/firebase-config.js` diabaikan oleh Git agar konfigurasi lokal tidak ikut ter-commit. Firebase Web API key bukan password rahasia; jangan pernah menaruh service-account private key di frontend.
 
 **Status:** file ini baru menyediakan tempat mengisi konfigurasi Firebase. Integrasi SDK, autentikasi, dan koneksi Firestore belum diaktifkan oleh template ini.
+
+## Deploy ke Vercel
+
+Proyek ini dapat di-deploy sebagai **frontend statis + Vercel Function**.
+Vercel tidak menjalankan `server.js` sebagai proses Express yang terus hidup;
+endpoint health check produksi berada di `api/health.js`.
+
+1. Ekstrak ZIP, lalu unggah folder `kelas-xi-tkj-v3` ke repository GitHub.
+2. Buka https://vercel.com/new dan impor repository tersebut.
+3. Pada Project Settings saat impor:
+   - Framework Preset: **Other**
+   - Root Directory: `./` (folder yang berisi `vercel.json`)
+   - Build Command: kosong / **Override** dimatikan
+   - Output Directory: kosong / **Override** dimatikan
+   - Install Command: biarkan otomatis atau kosong
+4. Klik **Deploy**.
+5. Setelah selesai, buka `https://nama-proyek.vercel.app/`.
+6. Tes backend function melalui `https://nama-proyek.vercel.app/api/health`.
+
+### Konfigurasi Firebase
+
+Isi `js/services/firebase-config.js` dengan konfigurasi aplikasi Web Firebase
+sebelum deploy. Jika file ini diabaikan Git oleh `.gitignore`, buat file tersebut
+di repository atau ubah aturan ignore untuk mengizinkan file konfigurasi Web.
+Firebase Web API key bukan kredensial server rahasia. Jangan pernah commit
+service-account private key.
+
+### Batasan versi deploy ini
+
+- Halaman dan aset frontend dapat di-host di Vercel.
+- `/api/health` berjalan sebagai Vercel Serverless Function.
+- `server.js` tetap untuk menjalankan Express secara lokal.
+- Database masih **belum terhubung**. Data yang saat ini disimpan di localStorage
+  tidak otomatis tersinkron antar pengguna/perangkat.
+- Login role di UI masih pratinjau, bukan autentikasi produksi. Aktifkan Firebase
+  Authentication dan terapkan Firestore Security Rules sebelum memakai data asli.
+- Jangan menganggap endpoint health sebagai bukti bahwa database sudah aktif.

@@ -2,7 +2,6 @@ node_modules/
 .env
 .env.*
 !.env.example
-js/services/firebase-config.js
 service-account*.json
 *service-account*.json
 npm-debug.log*
